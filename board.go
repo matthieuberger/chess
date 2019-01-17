@@ -498,7 +498,7 @@ func (b Board) MakeMove(m Move) *Board {
 	return &b
 }
 
-// give a list of the pieces present on the board
+// MapPieces returns a slice of the pieces available on the board
 func (b *Board) MapPieces() []Piece {
 	var piecesOnBoard []Piece
 	for _, p := range b.Piece {
