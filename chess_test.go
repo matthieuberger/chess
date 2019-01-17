@@ -22,6 +22,7 @@ const __ = NoPiece
 //		WR, WN, WB, WQ, WK, WB, WN, WR,
 //	),
 //
+
 func pieceArray(input ...Piece) (output [64]Piece) {
 	if len(input) != 64 {
 		panic(fmt.Sprint("pieceArray called with", len(input), "squares"))
@@ -170,8 +171,9 @@ func TestParseMove(t *testing.T) {
 // LegalMoves
 
 type movegenTest struct {
-	board *Board
-	moves []string
+	board        *Board
+	moves        []string
+	numberPieces int
 }
 
 var movegenTests = []movegenTest{
@@ -201,6 +203,7 @@ var movegenTests = []movegenTest{
 			"d6", "Qxh7#", "bxa8=Q+", "b8=Q+", "bxa8=R+", "b8=R+", "bxa8=B",
 			"b8=B", "bxa8=N", "b8=N",
 		},
+		numberPieces: 15,
 	},
 }
 
@@ -212,6 +215,15 @@ func TestMovegen(t *testing.T) {
 		}
 		if !reflect.DeepEqual(moves, test.moves) {
 			t.Errorf("test %d failed:\n\twant %v\n\thave %v", i, test.moves, moves)
+		}
+	}
+}
+
+func TestMapPIeces(t *testing.T) {
+	for i, test := range movegenTests {
+		piecesOnBoard := test.board.MapPieces()
+		if test.numberPieces != len(piecesOnBoard) {
+			t.Errorf("test %d failed:\n\twant %d \t\thave %d", i, test.numberPieces, len(piecesOnBoard))
 		}
 	}
 }

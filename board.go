@@ -1,4 +1,3 @@
-// Package chess provides functionality to handle chess and chess960 board positions.
 package chess
 
 import (
@@ -497,6 +496,17 @@ func (b Board) MakeMove(m Move) *Board {
 		b.MoveNr++
 	}
 	return &b
+}
+
+// give a list of the pieces present on the board
+func (b *Board) MapPieces() []Piece {
+	var piecesOnBoard []Piece
+	for _, p := range b.Piece {
+		if p != NoPiece {
+			piecesOnBoard = append(piecesOnBoard, p)
+		}
+	}
+	return piecesOnBoard
 }
 
 // find locates a piece in the given range of squares.
